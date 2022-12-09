@@ -5,7 +5,7 @@ from xcorr_funcs import normxcorr2, FastPeakFind
 import pandas as pd
 from skimage.feature import peak_local_max
 
-def find_black(img, size=7, thres=None):
+def find_black(img, size=7, thres=None, std_thres=None, plot_hist=False):
     """
     Find black particles in 乔哥's image. 
     
@@ -13,15 +13,23 @@ def find_black(img, size=7, thres=None):
     :type img: 2d array
     :param size: diameter of particle (px)
     :type size: int
-    :param thres: threshold for discerning black and white particles. By default, ``thres`` is inferred from the data as mean of the median and the mean of pixel sums of all the particles. However, it is preferred to set a threshold manually, with the knowledge of the specific data.
+    :param thres: threshold of mean intensity for discerning black and white particles. If None, the function will plot a histogram of mean intensity to help us.
     :type thres: int
+    :param std_thres: threshold of standard deviation for discerning black and white particles. If None, the function will plot a histogram of standard deviation to help us.
+    
+    .. note::
+    
+       If ``thres=None`` or ``std_thres=None``, all detected features will be returned. Histograms of mean intensity and standard deviation will be plotted to help us set the threshold.
+
     :return: list of particle positions, pixel value sums and corr map peak values (x, y, pv, peak)
     :rtype: pandas.DataFrame
     
     .. rubric:: Edit
     
-    :Nov 16, 2022: Initial commit.
+    * Nov 16, 2022: Initial commit.
+    * Dec 09, 2022: Speed up by replacing the sum loop with ``regionprops``. Plot histograms to help setting threshold. Include distance check.
     """
+    
     img = to8bit(img) # convert to 8-bit and saturate
     inv_img = 255 - img
     
@@ -30,31 +38,54 @@ def find_black(img, size=7, thres=None):
     gauss_sigma = size / 2.   
     gauss_mask = matlab_style_gauss2D(shape=gauss_shape,sigma=gauss_sigma) # 这里的shape是particle的直径，单位px
     
+
     timg = convolve2d(inv_img, gauss_mask, mode="same") 
     corr = normxcorr2(gauss_mask, timg, "same") # 找匹配mask的位置
     peak = FastPeakFind(corr) # 无差别找峰
     
-    # 计算mask内的像素值之和
-    Y, X = np.mgrid[0:img.shape[0], 0:img.shape[1]] 
-    R = size / 2.
-    pixel_sum_list = []
-    for y, x in peak.T:
-        mask = (X - x) ** 2 + (Y - y) ** 2 < R ** 2
-        pv = img[mask].sum()
-        pixel_sum_list.append(pv)
-        
-    # 把数据装进一个DataFrame
-    particles = pd.DataFrame({"x": peak[1], "y": peak[0], "pv": pixel_sum_list})
+    # apply min_dist criterion
+    particles = pd.DataFrame({"x": peak[1], "y": peak[0]})
     # 加入corr map峰值，为后续去重合服务
-    particles = particles.assign(peak=corr[particles.y, particles.x])
+    particles["peak"] = corr[particles.y, particles.x]
+    particles = min_dist_criterion(particles, size)
     
-    if thres == None:
-        thres = (particles.pv.median() + particles.pv.mean()) / 2
+    # 计算mask内的像素值的均值和标准差
+    ## Create mask with feature regions as 1
+    R = size / 2.
+    mask = np.zeros(img.shape)
+    for num, i in particles.iterrows():
+        rr, cc = draw.disk((i.y, i.x), 0.8*R) # 0.8 to avoid overlap
+        mask[rr, cc] = 1
         
-    return particles.loc[particles.pv <= thres]
+    ## generate labeled image and construct regionprops
+    label_img = measure.label(mask)
+    regions = measure.regionprops_table(label_img, intensity_image=img, properties=("label", "centroid", "intensity_mean", "image_intensity")) # use raw image for computing properties
+    table = pd.DataFrame(regions)
+    table["stdev"] = table["image_intensity"].map(np.std)
+       
+    if thres is not None and std_thres is not None:
+        table = table.loc[(table["intensity_mean"] <= thres)&(table["stdev"] <= std_thres)]
+    elif thres is None and std_thres is None:
+        print("Threshold value(s) are missing, all detected features are returned.")        
+    elif thres is not None and std_thres is None:
+        print("Standard deviation threshold is not set, only apply mean intensity threshold")
+        table = table.loc[table["intensity_mean"] <= thres]
+    elif thres is None and std_thres is not None:
+        print("Mean intensity threshold is not set, only apply standard deviation threshold")
+        table = table.loc[table["stdev"] <= std_thres]
+    
+    if plot_hist == True:
+        table.hist(column=["intensity_mean", "stdev"], bins=20)
+        
+    table = table.rename(columns={"centroid-0": "y", "centroid-1": "x"}).drop(columns=["image_intensity"])
+    
+    return table
 
 
-def find_white(img, size=7, thres=None):
+def find_white(img, size=7, thres=None, std_thres=None, plot_hist=False):
+    """
+    Similar to find_black.
+    """
     
     img = to8bit(img) # convert to 8-bit and saturate
     
@@ -64,21 +95,47 @@ def find_white(img, size=7, thres=None):
     corr = normxcorr2(mh, img, "same")
     coordinates = peak_local_max(corr, min_distance=5) 
     
-    ## Rule out black ones
-    Y, X = np.mgrid[0:img.shape[0], 0:img.shape[1]] 
-    R = 3.5 
-    pixel_sum_new_list = []
-    for y, x in coordinates:
-        mask = (X - x) ** 2 + (Y - y) ** 2 < R ** 2
-        pv = img[mask].sum()
-        pixel_sum_new_list.append(pv)
-
-    particles = pd.DataFrame({"x": coordinates.T[1], "y": coordinates.T[0], "pv": pixel_sum_new_list})
+    # apply min_dist criterion
+    particles = pd.DataFrame({"x": coordinates.T[1], "y": coordinates.T[0]})
+    # 加入corr map峰值，为后续去重合服务
+    particles["peak"] = corr[particles.y, particles.x]
+    particles = min_dist_criterion(particles, size)
     
-    if thres == None:
-        thres = (particles.pv.median() + particles.pv.mean()) / 4
-        
-    return particles.loc[particles.pv >= thres]
+    # 计算mask内的像素值的均值和标准差
+    ## Create mask with feature regions as 1
+    R = size / 2.
+    mask = np.zeros(img.shape)
+    for num, i in particles.iterrows():
+        rr, cc = draw.disk((i.y, i.x), 0.8*R) # 0.8 to avoid overlap
+        mask[rr, cc] = 1
+
+    ## generate labeled image and construct regionprops
+    label_img = measure.label(mask)
+    regions = measure.regionprops_table(label_img, intensity_image=img, properties=("label", "centroid", "intensity_mean", "image_intensity")) # use raw image for computing properties
+    table = pd.DataFrame(regions)
+    table["stdev"] = table["image_intensity"].map(np.std)
+    
+    ## Arbitrary lower bound here, be careful!
+    intensity_lb = (table["intensity_mean"].median() + table["intensity_mean"].mean()) / 4
+    table = table.loc[table["intensity_mean"]>=intensity_lb]
+    
+    if thres is not None and std_thres is not None:
+        table = table.loc[(table["intensity_mean"] <= thres)&(table["stdev"] <= std_thres)]
+    elif thres is None and std_thres is None:
+        print("Threshold value(s) are missing, all detected features are returned.")        
+    elif thres is not None and std_thres is None:
+        print("Standard deviation threshold is not set, only apply mean intensity threshold")
+        table = table.loc[table["intensity_mean"] <= thres]
+    elif thres is None and std_thres is not None:
+        print("Mean intensity threshold is not set, only apply standard deviation threshold")
+        table = table.loc[table["stdev"] <= std_thres]
+    
+    if plot_hist == True:
+        table.hist(column=["intensity_mean", "stdev"], bins=20)
+    
+    table = table.rename(columns={"centroid-0": "y", "centroid-1": "x"}).drop(columns=["image_intensity"])
+
+    return table
 
 def min_dist_criterion(coords, min_dist):
     """
