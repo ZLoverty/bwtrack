@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bwtrack"
+version = "0.0.1"
+authors = [
+  { name="Zhengyang Liu", email="liuzy19911112@gmail.com" },
+]
+description = "A small particle tracking package that detects black and white particles."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy",
+    "myimagelib",
+    "pandas",
+    "scikit-image",
+    "scipy"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/zloverty/bwtrack"
+"Bug Tracker" = "https://github.com/zloverty/bwtrack/issues"
