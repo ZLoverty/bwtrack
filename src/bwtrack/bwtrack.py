@@ -83,24 +83,45 @@ def find_black(img, size=7, thres=None, std_thres=None, plot_hist=False):
     return table
 
 
-def find_white(img, size=7, thres=None, std_thres=None, plot_hist=False):
+def find_white(img, size=7, mask_size=None, mask_pattern="dw", thres=None, std_thres=None, plot_hist=False):
     """
-    Similar to find_black.
-    """
+    Find "white" particles in Qiaoge's images of particles at water-oil interface.
     
-    img = to8bit(img) # convert to 8-bit and saturate
-    
-    mh = mexican_hat(shape=(5,5), sigma=0.8) # 这里shape和上面同理，sigma需要自行尝试一下，1左右
-    #plt.imshow(mh, cmap="gray")
+    :param img: input image
+    :param size: particle size to look for (px)
+    :param mask_size: mask (template) image size (px). By default, ``mask_size`` is set to ``size+2``. Making mask slightly larger can help making the correlation map sharper, sometimes. 
+    :param mask_pattern: choose from "mh", "gs" and "dw", which stands for mexican hat, gaussian and double well, respectively. 
+    :param thres: mean intensity threshold, meant to discern white particles from black particles.
+    :param std_thres: standard deviation threshold, meant to discern white particles from black particles.
+    :plot_hist: if True, plot mean intensity and standard deviation histogram. This can help you to determine good threshold values. Set to False when doing batch tracking (default).
+    :return particles: a list of particle coordinates detected.
 
-    corr = normxcorr2(mh, img, "same")
+    .. rubric:: Edit
+    
+    * Jan 20, 2023 -- add double well mask pattern.
+    """
+    if mask_size == None:
+        mask_size = size + 2 # set default mask_size value 
+     
+    # construct mask
+    if mask_pattern == "dw":
+        X, Y = np.mgrid[-mask_size/2: mask_size/2: mask_size*1j, -mask_size/2: mask_size/2: mask_size*1j]
+        tpl = 1/4 * (X**2 + Y**2) ** 2 - size**2/8 * (X**2 + Y**2) 
+    elif mask_pattern == "mh":
+        tpl = mexican_hat(shape=(mask_size, mask_size), sigma=0.8) # sigma here is still arbitrary, I don't know how to set a more heuristic value yet
+    elif mask_pattern == "gs":
+        tpl =matlab_style_gauss2D(shape=(mask_size, mask_size), sigma=mask_size/3)
+
+    img = to8bit(img) # convert to 8-bit and saturate
+
+    corr = normxcorr2(tpl, img, "same")
     coordinates = peak_local_max(corr, min_distance=5) 
     
     # apply min_dist criterion
     particles = pd.DataFrame({"x": coordinates.T[1], "y": coordinates.T[0]})
     # 加入corr map峰值，为后续去重合服务
     particles["peak"] = corr[particles.y, particles.x]
-    particles = min_dist_criterion(particles, size)
+    # particles = min_dist_criterion(particles, size)
     
     # 计算mask内的像素值的均值和标准差
     ## Create mask with feature regions as 1
