@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install Pandoc
-      run: wget https://github.com/jgm/pandoc/releases/download/3.0/pandoc-3.0-1-arm64.deb && sudo dpkg -i pandoc-3.0-1-arm64.deb
+      run: wget https://github.com/jgm/pandoc/releases/download/3.0/pandoc-3.0-linux-amd64.tar.gz && tar xvzf pandoc-3.0-linux-amd64.tar.gz --strip-components 1 -C .
       
     - name: Build HTML      
       uses: ammaraskar/sphinx-action@master
