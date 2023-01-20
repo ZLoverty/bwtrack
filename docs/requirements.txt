@@ -1,1 +1,2 @@
 nbsphinx==0.8.12
+markupsafe==2.0.1
