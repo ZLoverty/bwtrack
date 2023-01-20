@@ -228,7 +228,7 @@ def show_result(img, particles, size=7, ROI=None):
     fig, ax = plt.subplots()
     left, right, bottom, top = ROI
 
-    b_circ = [plt.Circle((xi, yi), radius=3, linewidth=1, fill=False, ec="magenta") for xi, yi in zip(particles.x, particles.y)]
+    b_circ = [plt.Circle((xi, yi), radius=size/2, linewidth=1, fill=False, ec="magenta") for xi, yi in zip(particles.x, particles.y)]
     b = PatchCollection(b_circ, match_original=True)
     ax.imshow(img[top:bottom, left:right], cmap="gray", extent=(left, right, bottom, top))
     ax.add_collection(b)
