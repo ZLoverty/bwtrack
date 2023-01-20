@@ -1,3 +1,4 @@
 nbsphinx==0.8.12
 markupsafe==2.0.1
 pandoc==2.3
+jinja2==3.0.3
