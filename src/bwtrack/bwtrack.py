@@ -27,8 +27,8 @@ def find_black(img, size=7, thres=None, std_thres=None, plot_hist=False):
     
     .. rubric:: Edit
     
-    * Nov 16, 2022: Initial commit.
-    * Dec 09, 2022: Speed up by replacing the sum loop with ``regionprops``. Plot histograms to help setting threshold. Include distance check.
+    * Nov 16, 2022 -- Initial commit.
+    * Dec 09, 2022 -- Speed up by replacing the sum loop with ``regionprops``. Plot histograms to help setting threshold. Include distance check.
     """
     
     img = to8bit(img) # convert to 8-bit and saturate
@@ -98,6 +98,7 @@ def find_white(img, size=7, mask_size=None, mask_pattern="dw", thres=None, std_t
 
     .. rubric:: Edit
     
+    * Nov 16, 2022 -- Initial commit.
     * Jan 20, 2023 -- add double well mask pattern.
     """
     if mask_size == None:
