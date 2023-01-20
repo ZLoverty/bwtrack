@@ -5,6 +5,8 @@ from myimagelib.xcorr_funcs import normxcorr2, FastPeakFind
 import pandas as pd
 from skimage.feature import peak_local_max
 from skimage import io, measure, draw
+import matplotlib.pyplot as plt
+from matplotlib.collections import PatchCollection
 
 def find_black(img, size=7, thres=None, std_thres=None, plot_hist=False):
     """
@@ -97,7 +99,7 @@ def find_white(img, size=7, mask_size=None, mask_pattern="dw", thres=None, std_t
     :return particles: a list of particle coordinates detected.
 
     .. rubric:: Edit
-    
+
     * Nov 16, 2022 -- Initial commit.
     * Jan 20, 2023 -- add double well mask pattern.
     """
@@ -202,3 +204,33 @@ def mexican_hat(shape=(3,3), sigma=1):
     if sumh != 0:
         h /= sumh
     return h
+
+def show_result(img, particles, size=7, ROI=None):
+    """
+    Convenient function to plot particles on top of the raw image.
+
+    :param img: raw image
+    :param particles: result of ``find_black()`` or ``find_white``
+    :param size: particle size (px)
+    :param ROI: region of interest, defined as (left, right, bottom, top)
+    :return: fig, ax, matplotlib handles for further adjustment.
+
+    .. rubric:: Edit
+
+    * Jan 20, 2023 -- Initial commit.
+    """
+    # determine default ROI
+    if ROI == None:
+        h, w = img.shape
+        ROI = (0, min(100, w), min(100, h), 0)
+    else:
+        assert(len(ROI)==4)
+    fig, ax = plt.subplots()
+    left, right, bottom, top = ROI
+
+    b_circ = [plt.Circle((xi, yi), radius=3, linewidth=1, fill=False, ec="magenta") for xi, yi in zip(particles.x, particles.y)]
+    b = PatchCollection(b_circ, match_original=True)
+    ax.imshow(img[top:bottom, left:right], cmap="gray", extent=(left, right, bottom, top))
+    ax.add_collection(b)
+
+    return fig, ax

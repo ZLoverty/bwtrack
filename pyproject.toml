@@ -21,7 +21,8 @@ dependencies = [
     "myimagelib",
     "pandas",
     "scikit-image",
-    "scipy"
+    "scipy",
+    "matplotlib"
 ]
 
 [project.urls]
