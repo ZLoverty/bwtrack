@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install Pandoc
-      run: sudo apt install pandoc
+      run: conda install pandoc
     - name: Build HTML      
       uses: ammaraskar/sphinx-action@master
     - name: Upload artifacts
