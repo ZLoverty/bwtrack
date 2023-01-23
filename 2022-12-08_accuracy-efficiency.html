@@ -7,30 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Improve the accuracy and efficiency of the tracking &#8212; bwtrack 1.3 documentation</title>
-    
-  <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
-
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
-    
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
-
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -38,460 +20,22 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="White particles" href="2023-01-11_white-particles.html" />
     <link rel="prev" title="尝试在乔哥的图片上找到黑白两色的颗粒" href="qiaoge.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-    <!-- Google Analytics -->
-    
-  </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  </head><body>
+  
 
-    
-    <div class="container-fluid" id="banner"></div>
-
-    
-
-    <div class="container-xl">
-      <div class="row">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
           
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">bwtrack 1.3 documentation</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="usage.html">
-   Usage
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="api.html">
-   API reference
-  </a>
- </li>
- <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="notebooks.html">
-   Notebooks
-  </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul class="current">
-   <li class="toctree-l2">
-    <a class="reference internal" href="qiaoge.html">
-     尝试在乔哥的图片上找到黑白两色的颗粒
-    </a>
-   </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     Improve the accuracy and efficiency of the tracking
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="2023-01-11_white-particles.html">
-     White particles
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="example.html">
-     Examples of use
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
 
-    </div>
-</nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
+          <div class="body" role="main">
             
-            <div class="navbar_extra_footer">
-            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
-            </div>
-            
-        </div>
-    </div>
-    <div id="rtd-footer-container"></div>
-</div>
-
-
-          
-
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
-<div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
-
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/2022-12-08_accuracy-efficiency.ipynb.txt"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
-
-    </div>
-</div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#0-Run-original-code">
-   0 Run original code
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#0.1-Find-bw-on-the-large-image">
-     0.1 Find bw on the large image
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#0.2-Plot-particle-locations">
-     0.2 Plot particle locations
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#0.3-Take-a-small-area-for-this-test">
-     0.3 Take a small area for this test
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#1-Improve-accuracy">
-   1 Improve accuracy
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#1.1-Misclassification-of-black-and-white">
-     1.1 Misclassification of black and white
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#1.1.1-What’s-wrong-with-mean-intensity?">
-       1.1.1 What’s wrong with mean intensity?
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#1.1.2-Seek-better-criteria">
-       1.1.2 Seek better criteria
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#Standard-deviation">
-         Standard deviation
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#Other-criteria">
-         Other criteria
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#1.2-White-false-positive">
-     1.2 White false positive
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#1.2.1-Mean-intensity">
-       1.2.1 Mean intensity
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#2-Improve-efficiency">
-   2 Improve efficiency
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#2.1-Which-step-is-slow?">
-     2.1 Which step is slow?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#2.2-New-find_white">
-     2.2 New
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       find_white
-      </span>
-     </code>
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#3-Last-remark">
-   3 Last remark
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#4-Minimal-example">
-   4 Minimal example
-  </a>
- </li>
-</ul>
-
-    </nav>
-</div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Improve the accuracy and efficiency of the tracking</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#0-Run-original-code">
-   0 Run original code
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#0.1-Find-bw-on-the-large-image">
-     0.1 Find bw on the large image
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#0.2-Plot-particle-locations">
-     0.2 Plot particle locations
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#0.3-Take-a-small-area-for-this-test">
-     0.3 Take a small area for this test
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#1-Improve-accuracy">
-   1 Improve accuracy
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#1.1-Misclassification-of-black-and-white">
-     1.1 Misclassification of black and white
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#1.1.1-What’s-wrong-with-mean-intensity?">
-       1.1.1 What’s wrong with mean intensity?
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#1.1.2-Seek-better-criteria">
-       1.1.2 Seek better criteria
-      </a>
-      <ul class="nav section-nav flex-column">
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#Standard-deviation">
-         Standard deviation
-        </a>
-       </li>
-       <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#Other-criteria">
-         Other criteria
-        </a>
-       </li>
-      </ul>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#1.2-White-false-positive">
-     1.2 White false positive
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#1.2.1-Mean-intensity">
-       1.2.1 Mean intensity
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#2-Improve-efficiency">
-   2 Improve efficiency
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#2.1-Which-step-is-slow?">
-     2.1 Which step is slow?
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#2.2-New-find_white">
-     2.2 New
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       find_white
-      </span>
-     </code>
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#3-Last-remark">
-   3 Last remark
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#4-Minimal-example">
-   4 Minimal example
-  </a>
- </li>
-</ul>
-
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            <main id="main-content" role="main">
-                
-              <div>
-                
   
 <style>
 /* CSS for nbsphinx extension */
@@ -750,7 +294,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <section id="Improve-the-accuracy-and-efficiency-of-the-tracking">
-<h1>Improve the accuracy and efficiency of the tracking<a class="headerlink" href="#Improve-the-accuracy-and-efficiency-of-the-tracking" title="Permalink to this headline">#</a></h1>
+<h1>Improve the accuracy and efficiency of the tracking<a class="headerlink" href="#Improve-the-accuracy-and-efficiency-of-the-tracking" title="Permalink to this headline">¶</a></h1>
 <p>There are two major issues that limits the use of the current tracking code:</p>
 <ul class="simple">
 <li><p>Accuracy: the separation between black and white is not satisfactory; when finding white particles, many false positives are detected.</p></li>
@@ -797,10 +341,10 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <section id="0-Run-original-code">
-<h2>0 Run original code<a class="headerlink" href="#0-Run-original-code" title="Permalink to this headline">#</a></h2>
+<h2>0 Run original code<a class="headerlink" href="#0-Run-original-code" title="Permalink to this headline">¶</a></h2>
 <p>So we can compare with, and see if it is improved or not.</p>
 <section id="0.1-Find-bw-on-the-large-image">
-<h3>0.1 Find bw on the large image<a class="headerlink" href="#0.1-Find-bw-on-the-large-image" title="Permalink to this headline">#</a></h3>
+<h3>0.1 Find bw on the large image<a class="headerlink" href="#0.1-Find-bw-on-the-large-image" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -837,7 +381,7 @@ Wall time: 3min 9s
 <p>It would be nice to avoid this warning of “divided by zero”.</p>
 </section>
 <section id="0.2-Plot-particle-locations">
-<h3>0.2 Plot particle locations<a class="headerlink" href="#0.2-Plot-particle-locations" title="Permalink to this headline">#</a></h3>
+<h3>0.2 Plot particle locations<a class="headerlink" href="#0.2-Plot-particle-locations" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -936,7 +480,7 @@ Wall time: 1.28 s
 </div>
 </section>
 <section id="0.3-Take-a-small-area-for-this-test">
-<h3>0.3 Take a small area for this test<a class="headerlink" href="#0.3-Take-a-small-area-for-this-test" title="Permalink to this headline">#</a></h3>
+<h3>0.3 Take a small area for this test<a class="headerlink" href="#0.3-Take-a-small-area-for-this-test" title="Permalink to this headline">¶</a></h3>
 <p>In the whole image, it is not easy to see clearly which detections are problematic. After careful inspection, I find the right side (x&gt;1800) to have bad detection quality. So we crop a 100x100 window in the upper right corner and test new code here.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[223]:
@@ -974,11 +518,11 @@ Wall time: 1.28 s
 </section>
 </section>
 <section id="1-Improve-accuracy">
-<h2>1 Improve accuracy<a class="headerlink" href="#1-Improve-accuracy" title="Permalink to this headline">#</a></h2>
+<h2>1 Improve accuracy<a class="headerlink" href="#1-Improve-accuracy" title="Permalink to this headline">¶</a></h2>
 <section id="1.1-Misclassification-of-black-and-white">
-<h3>1.1 Misclassification of black and white<a class="headerlink" href="#1.1-Misclassification-of-black-and-white" title="Permalink to this headline">#</a></h3>
+<h3>1.1 Misclassification of black and white<a class="headerlink" href="#1.1-Misclassification-of-black-and-white" title="Permalink to this headline">¶</a></h3>
 <section id="1.1.1-What’s-wrong-with-mean-intensity?">
-<h4>1.1.1 What’s wrong with mean intensity?<a class="headerlink" href="#1.1.1-What’s-wrong-with-mean-intensity?" title="Permalink to this headline">#</a></h4>
+<h4>1.1.1 What’s wrong with mean intensity?<a class="headerlink" href="#1.1.1-What’s-wrong-with-mean-intensity?" title="Permalink to this headline">¶</a></h4>
 <p>White particles are sometimes recognized as black in the example above. This is likely due to the inproper <code class="docutils literal notranslate"><span class="pre">thres</span></code> value. Indeed, although we determined <code class="docutils literal notranslate"><span class="pre">thres=3500</span></code> by looking at the “mass” (intensity sum) histogram for the first example, this histogram is not part of the routine. As a result, when dealing with other images, where imaging conditions and preproccessings are modified, the old method fails.</p>
 <p>Let’s first check what goes wrong with mean intensity.</p>
 <div class="nbinput nblast docutils container">
@@ -1287,10 +831,10 @@ Wall time: 1.28 s
 <p>The mean intensity is 43.16, much larger than the black in the corner (2.04). It is also close to a white particle mean intensity in the corner. The illumination inhomogeneity is exactly the reason why we no longer see the separation in the mean intensity (or total mass to be more exact) like in smaller images. And that leads to the misclassification of black and white in the original method.</p>
 </section>
 <section id="1.1.2-Seek-better-criteria">
-<h4>1.1.2 Seek better criteria<a class="headerlink" href="#1.1.2-Seek-better-criteria" title="Permalink to this headline">#</a></h4>
+<h4>1.1.2 Seek better criteria<a class="headerlink" href="#1.1.2-Seek-better-criteria" title="Permalink to this headline">¶</a></h4>
 <p>Mean intensity fails, so what can we do? Natural answer is let’s look at other properties of black and white particles and see if there are criteria better than mean intensity.</p>
 <section id="Standard-deviation">
-<h5>Standard deviation<a class="headerlink" href="#Standard-deviation" title="Permalink to this headline">#</a></h5>
+<h5>Standard deviation<a class="headerlink" href="#Standard-deviation" title="Permalink to this headline">¶</a></h5>
 <p>I realize that most white particles have large intensity gradient compared to black particles. As a result, if I compute the standard deviation <span class="math notranslate nohighlight">\(\sigma\)</span> of pixel intensities in a particle, we should have</p>
 <div class="math notranslate nohighlight">
 \[\sigma_b \ll \sigma_w\]</div>
@@ -1817,13 +1361,13 @@ Wall time: 1.28 s
 <p>In the upper right corner, most white particles are excluded, while all the black particles are retained.</p>
 </section>
 <section id="Other-criteria">
-<h5>Other criteria<a class="headerlink" href="#Other-criteria" title="Permalink to this headline">#</a></h5>
+<h5>Other criteria<a class="headerlink" href="#Other-criteria" title="Permalink to this headline">¶</a></h5>
 <p>Since standard deviation works, we currently don’t need more. I put a section here to hold the place for future development.</p>
 </section>
 </section>
 </section>
 <section id="1.2-White-false-positive">
-<h3>1.2 White false positive<a class="headerlink" href="#1.2-White-false-positive" title="Permalink to this headline">#</a></h3>
+<h3>1.2 White false positive<a class="headerlink" href="#1.2-White-false-positive" title="Permalink to this headline">¶</a></h3>
 <p>Apart from misclassifying white particles as black, the old method also finds many false positives, particularly when looking for white particles. See example below.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[278]:
@@ -1856,7 +1400,7 @@ Wall time: 1.28 s
 </div>
 <p>In this specific region, the false positives are much brighter than the actual particles. However, the light inhomogeneity issue might again hinder the possibility of using mean intensity as the criterion. Let’s take a look.</p>
 <section id="1.2.1-Mean-intensity">
-<h4>1.2.1 Mean intensity<a class="headerlink" href="#1.2.1-Mean-intensity" title="Permalink to this headline">#</a></h4>
+<h4>1.2.1 Mean intensity<a class="headerlink" href="#1.2.1-Mean-intensity" title="Permalink to this headline">¶</a></h4>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[280]:
 </pre></div>
@@ -2186,10 +1730,10 @@ array([[&lt;AxesSubplot: title={&#39;center&#39;: &#39;intensity_mean&#39;}&gt;]
 </section>
 </section>
 <section id="2-Improve-efficiency">
-<h2>2 Improve efficiency<a class="headerlink" href="#2-Improve-efficiency" title="Permalink to this headline">#</a></h2>
+<h2>2 Improve efficiency<a class="headerlink" href="#2-Improve-efficiency" title="Permalink to this headline">¶</a></h2>
 <p>The code runs unexpectly slow. On my computer, each frame takes 3 minutes, only to give an unsatisfactory result. Let’s try to improve the speed.</p>
 <section id="2.1-Which-step-is-slow?">
-<h3>2.1 Which step is slow?<a class="headerlink" href="#2.1-Which-step-is-slow?" title="Permalink to this headline">#</a></h3>
+<h3>2.1 Which step is slow?<a class="headerlink" href="#2.1-Which-step-is-slow?" title="Permalink to this headline">¶</a></h3>
 <p>It turns out that the slowest step is <strong>the loop for computing intensity sum</strong>. In this example, it takes 1m16s. This can be easily improved by the <code class="docutils literal notranslate"><span class="pre">regionprops</span></code> method we already used in the previous section.</p>
 <p>We modify the function to receive two threshold values for both mean intensity and standard deviation. The function also plots histograms for mean intensity and standard deviation to help us determine good threshold values.</p>
 <div class="nbinput nblast docutils container">
@@ -2491,7 +2035,7 @@ Mean intensity threshold is not set, only apply standard deviation threshold
 </div>
 </section>
 <section id="2.2-New-find_white">
-<h3>2.2 New <code class="docutils literal notranslate"><span class="pre">find_white</span></code><a class="headerlink" href="#2.2-New-find_white" title="Permalink to this headline">#</a></h3>
+<h3>2.2 New <code class="docutils literal notranslate"><span class="pre">find_white</span></code><a class="headerlink" href="#2.2-New-find_white" title="Permalink to this headline">¶</a></h3>
 <p>We can modify <code class="docutils literal notranslate"><span class="pre">find_white</span></code> in a similar way to speed it up, and to provide histogram for thresholding.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[420]:
@@ -2840,11 +2384,11 @@ Standard deviation threshold is not set, only apply mean intensity threshold
 </section>
 </section>
 <section id="3-Last-remark">
-<h2>3 Last remark<a class="headerlink" href="#3-Last-remark" title="Permalink to this headline">#</a></h2>
+<h2>3 Last remark<a class="headerlink" href="#3-Last-remark" title="Permalink to this headline">¶</a></h2>
 <p>After this round of edit, the two functions <code class="docutils literal notranslate"><span class="pre">find_black</span></code> and <code class="docutils literal notranslate"><span class="pre">find_white</span></code> are largely repetitive, except the mask used. There should be a way to merge the two functions together and make the code more concise.</p>
 </section>
 <section id="4-Minimal-example">
-<h2>4 Minimal example<a class="headerlink" href="#4-Minimal-example" title="Permalink to this headline">#</a></h2>
+<h2>4 Minimal example<a class="headerlink" href="#4-Minimal-example" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -3041,50 +2585,112 @@ Standard deviation threshold is not set, only apply mean intensity threshold
 </section>
 
 
-              </div>
-              
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="qiaoge.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">尝试在乔哥的图片上找到黑白两色的颗粒</p>
+          </div>
+          
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="2023-01-11_white-particles.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">White particles</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
-</div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
-  
-    By Zhengyang Liu<br/>
-  
-      &copy; Copyright 2023, Zhengyang Liu.<br/>
-</p>
-        </footer>
-    </div>
-    
-</div>
-
-
       </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">bwtrack</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="notebooks.html">Notebooks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="qiaoge.html">尝试在乔哥的图片上找到黑白两色的颗粒</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Improve the accuracy and efficiency of the tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#0-Run-original-code">0 Run original code</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#0.1-Find-bw-on-the-large-image">0.1 Find bw on the large image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#0.2-Plot-particle-locations">0.2 Plot particle locations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#0.3-Take-a-small-area-for-this-test">0.3 Take a small area for this test</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#1-Improve-accuracy">1 Improve accuracy</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#1.1-Misclassification-of-black-and-white">1.1 Misclassification of black and white</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#1.1.1-What’s-wrong-with-mean-intensity?">1.1.1 What’s wrong with mean intensity?</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#1.1.2-Seek-better-criteria">1.1.2 Seek better criteria</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#Standard-deviation">Standard deviation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#Other-criteria">Other criteria</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#1.2-White-false-positive">1.2 White false positive</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#1.2.1-Mean-intensity">1.2.1 Mean intensity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-Improve-efficiency">2 Improve efficiency</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#2.1-Which-step-is-slow?">2.1 Which step is slow?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#2.2-New-find_white">2.2 New <code class="docutils literal notranslate"><span class="pre">find_white</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#3-Last-remark">3 Last remark</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#4-Minimal-example">4 Minimal example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="2023-01-11_white-particles.html">White particles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example.html">Examples of use</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="notebooks.html">Notebooks</a><ul>
+      <li>Previous: <a href="qiaoge.html" title="previous chapter">尝试在乔哥的图片上找到黑白两色的颗粒</a></li>
+      <li>Next: <a href="2023-01-11_white-particles.html" title="next chapter">White particles</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
     </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+</div>
+<script>$('#searchbox').show(0);</script>
 
 
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Zhengyang Liu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/2022-12-08_accuracy-efficiency.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
   </body>
 </html>

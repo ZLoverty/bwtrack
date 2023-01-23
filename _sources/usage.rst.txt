@@ -12,7 +12,7 @@ To use bwtrack, first install it using pip:
 
 .. note::
 
-   Since this package is under active development, it is a good practice to always look for newer versions by passing ``--upgrade`` to ``pip``.
+   Since this package is under active development, it is a good practice to always look for newer versions by pass ``--upgrade``.
 
 
 Minimal example
