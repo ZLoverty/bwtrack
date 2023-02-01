@@ -218,13 +218,18 @@ def show_result(img, particles, size=7, ROI=None):
     .. rubric:: Edit
 
     * Jan 20, 2023 -- Initial commit.
+    * Jan 31, 2023 -- Fix ROI bug, which falsely stretches image if ROI is set to be larger than image size.
     """
+    h, w = img.shape
     # determine default ROI
+    
     if ROI == None:
-        h, w = img.shape
         ROI = (0, min(100, w), min(100, h), 0)
     else:
         assert(len(ROI)==4)
+        ROI[1] = min(ROI[1], w)
+        ROI[2] = min(ROI[1], h)
+
     fig, ax = plt.subplots()
     left, right, bottom, top = ROI
 
