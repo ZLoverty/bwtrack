@@ -31,6 +31,7 @@ def find_black(img, size=7, thres=None, std_thres=None, plot_hist=False):
     
     * Nov 16, 2022 -- Initial commit.
     * Dec 09, 2022 -- Speed up by replacing the sum loop with ``regionprops``. Plot histograms to help setting threshold. Include distance check.
+    * Feb 07, 2023 -- (i) use smaller kernel for smoothing, (ii) use ``skimage.feature.peak_local_max`` to find peak, (iii) since ``peak_local_max`` has distance criterion already, remove the ``min_dist_criterion`` step. (iv) set gaussian template with larger sigma (less intensity variation).
     """
     
     img = to8bit(img) # convert to 8-bit and saturate
@@ -38,26 +39,24 @@ def find_black(img, size=7, thres=None, std_thres=None, plot_hist=False):
     
     # generate gaussian template according to particle size
     gauss_shape = (size, size)
-    gauss_sigma = size / 2.   
+    gauss_sigma = size    
     gauss_mask = matlab_style_gauss2D(shape=gauss_shape,sigma=gauss_sigma) # 这里的shape是particle的直径，单位px
     
 
-    timg = convolve2d(inv_img, gauss_mask, mode="same") 
+    timg = convolve2d(inv_img, matlab_style_gauss2D(), mode="same") 
     corr = normxcorr2(gauss_mask, timg, "same") # 找匹配mask的位置
-    peak = FastPeakFind(corr) # 无差别找峰
-    
-    # apply min_dist criterion
-    particles = pd.DataFrame({"x": peak[1], "y": peak[0]})
-    # 加入corr map峰值，为后续去重合服务
-    particles["peak"] = corr[particles.y, particles.x]
-    particles = min_dist_criterion(particles, size)
+    pcm = peak_local_max(corr, min_distance=size)
+
+    # construct a DataFrame to store particle coordinates
+    particles = pd.DataFrame({"x": pcm[:, 1], "y": pcm[:, 0]})
+
     
     # 计算mask内的像素值的均值和标准差
     ## Create mask with feature regions as 1
-    R = size / 2.
+    R = size // 2 
     mask = np.zeros(img.shape)
     for num, i in particles.iterrows():
-        rr, cc = draw.disk((i.y, i.x), 0.8*R) # 0.8 to avoid overlap
+        rr, cc = draw.disk((i.y, i.x), R) # 0.5 to avoid overlap
         mask[rr, cc] = 1
         
     ## generate labeled image and construct regionprops
@@ -122,16 +121,13 @@ def find_white(img, size=7, mask_size=None, mask_pattern="dw", thres=None, std_t
     
     # apply min_dist criterion
     particles = pd.DataFrame({"x": coordinates.T[1], "y": coordinates.T[0]})
-    # 加入corr map峰值，为后续去重合服务
-    particles["peak"] = corr[particles.y, particles.x]
-    # particles = min_dist_criterion(particles, size)
     
     # 计算mask内的像素值的均值和标准差
     ## Create mask with feature regions as 1
-    R = size / 2.
+    R = size // 2
     mask = np.zeros(img.shape)
     for num, i in particles.iterrows():
-        rr, cc = draw.disk((i.y, i.x), 0.8*R) # 0.8 to avoid overlap
+        rr, cc = draw.disk((i.y, i.x), R) # 0.8 to avoid overlap
         mask[rr, cc] = 1
 
     ## generate labeled image and construct regionprops
@@ -228,7 +224,7 @@ def show_result(img, particles, size=7, ROI=None):
     else:
         assert(len(ROI)==4)
         ROI[1] = min(ROI[1], w)
-        ROI[2] = min(ROI[1], h)
+        ROI[2] = min(ROI[2], h)
 
     fig, ax = plt.subplots()
     left, right, bottom, top = ROI
@@ -239,3 +235,20 @@ def show_result(img, particles, size=7, ROI=None):
     ax.add_collection(b)
 
     return fig, ax
+
+def draw_particles(particles, size=7, ax=None, color="magenta"):
+    """
+    Draw particles in given axes. 
+
+    :param particles: result of ``find_black()`` or ``find_white``
+    :param size: particle size (px)
+    :param ax: ax to draw particles
+    :param color: color of particles
+
+    * Feb 07, 2023 -- Initial commit.
+    """
+    if ax == None:
+        ax = plt.gca()
+    b_circ = [plt.Circle((xi, yi), radius=size/2, linewidth=1, fill=False, ec=color) for xi, yi in zip(particles.x, particles.y)]
+    b = PatchCollection(b_circ, match_original=True)
+    ax.add_collection(b)
