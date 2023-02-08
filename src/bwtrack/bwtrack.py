@@ -236,7 +236,7 @@ def show_result(img, particles, size=7, ROI=None):
 
     return fig, ax
 
-def draw_particles(particles, size=7, ax=None, color="magenta"):
+def draw_particles(particles, size=7, ax=None, color="magenta", lw=1):
     """
     Draw particles in given axes. 
 
@@ -249,6 +249,6 @@ def draw_particles(particles, size=7, ax=None, color="magenta"):
     """
     if ax == None:
         ax = plt.gca()
-    b_circ = [plt.Circle((xi, yi), radius=size/2, linewidth=1, fill=False, ec=color) for xi, yi in zip(particles.x, particles.y)]
+    b_circ = [plt.Circle((xi, yi), radius=size/2, linewidth=lw, fill=False, ec=color) for xi, yi in zip(particles.x, particles.y)]
     b = PatchCollection(b_circ, match_original=True)
     ax.add_collection(b)
